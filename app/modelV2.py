@@ -141,10 +141,42 @@ class PostV2(BaseModel):
     timestamp = Column(DATETIME)
     publish_user_id = Column(Integer)
     topic_id = Column(Integer)
-
     top = Column(Integer)
     disable = Column(BOOLEAN)
     old_id = Column(BigInteger)
+
+
+class LikeUserV2(BaseModel):
+    __tablename__='t_like_user_relation'
+    id =Column(BigInteger,primary_key=True)
+    timestamp = Column(DATETIME)
+    liked_id = Column(BigInteger)
+    liker_id = Column(BigInteger)
+
+class FoodCardV2(BaseModel):
+    __tablename__='t_foodcard'
+    id = Column(BigInteger,primary_key=True)
+    comment = Column(VARCHAR)
+    disable =  Column(BOOLEAN)
+    image_url = Column(VARCHAR)
+    location = Column(VARCHAR)
+    latitude = Column(VARCHAR)
+    longitude = Column(VARCHAR)
+    pass_flag = Column(BOOLEAN)
+    price = Column(VARCHAR)
+    timestamp = Column(DATETIME)
+    title = Column(VARCHAR)
+    author_id = Column(BigInteger)
+    old_id = Column(BigInteger)
+
+
+class FollowV2(BaseModel):
+    __tablename__='t_follow_relation'
+    id = Column(BigInteger,primary_key=True)
+    timestamp = Column(DATETIME)
+    followed_id = Column(BigInteger)
+    follower_id = Column(BigInteger)
+
 
 
 

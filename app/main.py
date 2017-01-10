@@ -28,12 +28,12 @@ session2 = DBSession_now()
 # 5. android_version 安卓版本 ok
 # 6. checkmsg 短信验证 ok
 # 7. topic 话题 ok
-# 8. post 文章
+# 8. post 文章 ok
 # 9. comment 评论
 # 10. comment_image 评论图片
-# 11. follow_id 关注
-# 12. foodcard 食物照片
-# 13. like_user_id 喜欢关系
+# 11. follow_id 关注 ok
+# 12. foodcard 食物照片 ok
+# 13. like_user_id 喜欢关系  ok
 # 14. message消息
 # 15. message_image 图片消息
 # 16. post_image 文章图片
@@ -69,7 +69,7 @@ session2 = DBSession_now()
 
 # user.old_id 补充对应的主键的信息
 
-#   *****************1**************************
+#   *****************12**************************
 
 # print "strat transfer talbe User AvatarVoices "
 # query = session1.query(User)
@@ -106,7 +106,7 @@ session2 = DBSession_now()
 #
 # print "finish transfer table User AvatarVoices"
 
-#***************************2******************************
+#***************************3******************************
 
 
 # print "strat transfer talbe Avtivity "
@@ -131,7 +131,7 @@ session2 = DBSession_now()
 
 
 
-#***************************3******************************
+#***************************4******************************
 
 # print "strat transfer talbe AvtivityImage "
 #
@@ -149,7 +149,7 @@ session2 = DBSession_now()
 # session2.commit()
 # print "finish transfer table AvtivityImage"
 
-#***************************4******************************
+#***************************5******************************
 
 # print "strat transfer talbe AndroidVersion "
 #
@@ -164,7 +164,7 @@ session2 = DBSession_now()
 
 
 
-#***************************5******************************
+#***************************6******************************
 
 # print "strat transfer talbe checkMsgs "
 #
@@ -177,7 +177,7 @@ session2 = DBSession_now()
 # print "finish transfer table checkMsgs"
 
 
-#***************************6******************************
+#***************************7******************************
 
 # print "strat transfer talbe topic "
 #
@@ -190,21 +190,97 @@ session2 = DBSession_now()
 # session2.commit()
 # print "finish transfer table topic"
 
-#***************************7******************************
+#***************************8******************************
 
-print "strat transfer talbe post "
+# print "strat transfer talbe post "
+#
+# query = session1.query(Post)
+# for post in query:
+#     #关联avatarvoice
+#     tempuser = session2.query(UserV2).filter_by(old_id =post.authorid).first()
+#     temptopic = session2.query(TopicV2).filter_by(old_id = post.topicid).first()
+#     if tempuser is not None and temptopic is not None:
+#         postV2 = PostV2(body = post.body,disable = post.disable,timestamp = post.timestamp,title= post.title,top=post.top,publish_user_id = tempuser.id,
+#                     topic_id= temptopic.id,old_id = post.id)
+#         session2.add(postV2)
+# session2.commit()
+# print "finish transfer table post"
 
-query = session1.query(Post)
-for post in query:
-    #关联avatarvoice
-    tempuser = session2.query(UserV2).filter_by(old_id =post.authorid).first()
-    temptopic = session2.query(TopicV2).filter_by(old_id = post.topicid).first()
-    if tempuser is not None and temptopic is not None:
-        postV2 = PostV2(body = post.body,disable = post.disable,timestamp = post.timestamp,title= post.title,top=post.top,publish_user_id = tempuser.id,
-                    topic_id= temptopic.id,old_id = post.id)
-        session2.add(postV2)
+#***************************9******************************
+
+# print "strat transfer talbe likeuser "
+#
+# query = session1.query(LikeUser)
+# for likeuser in query:
+#     #关联avatarvoice
+#     templikeuser = session2.query(UserV2).filter_by(old_id =likeuser.likeid).first()
+#     templikeduser = session2.query(UserV2).filter_by(old_id = likeuser.likedid).first()
+#     temp = LikeUserV2(timestamp = likeuser.timestamp,liked_id = templikeduser.id,liker_id=templikeuser.id)
+#     session2.add(temp)
+# session2.commit()
+# print "finish transfer table likeuser"
+
+
+#***************************10******************************
+
+# print "strat transfer talbe likeuser "
+#
+# query = session1.query(LikeUser)
+# for likeuser in query:
+#     #关联avatarvoice
+#     templikeuser = session2.query(UserV2).filter_by(old_id =likeuser.likeid).first()
+#     templikeduser = session2.query(UserV2).filter_by(old_id = likeuser.likedid).first()
+#     temp = LikeUserV2(timestamp = likeuser.timestamp,liked_id = templikeduser.id,liker_id=templikeuser.id)
+#     session2.add(temp)
+# session2.commit()
+# print "finish transfer table likeuser"
+
+
+
+
+#***************************10******************************
+#
+# print "strat transfer talbe foodcard "
+#
+# query = session1.query(FoodCard)
+# for foodcard in query:
+#     tempUser = session2.query(UserV2).filter_by(old_id = foodcard.authorid).first()
+#     temp = FoodCardV2(comment = foodcard.comment,disable = foodcard.disable,image_url=foodcard.imageurl,location= foodcard.location,
+#         longitude = foodcard.longitude ,latitude = foodcard.latitude ,price = foodcard.price,pass_flag= foodcard.passflag,title = foodcard.title,
+#                     timestamp = foodcard.timestamp,author_id = tempUser.id,old_id = foodcard.id)
+#     session2.add(temp)
+# session2.commit()
+# print "finish transfer table foodcard"
+
+#***************************11******************************
+
+# print "strat transfer talbe follow "
+#
+# query = session1.query(Follow)
+# for follow in query:
+#     tempfollower = session2.query(UserV2).filter_by(old_id = follow.follower_id).first()
+#     tempfollowed = session2.query(UserV2).filter_by(old_id = follow.followed_id).first()
+#     temp =FollowV2(timestamp= follow.timestamp,followed_id=tempfollowed.id,follower_id = tempfollower.id)
+#     session2.add(temp)
+# session2.commit()
+# print "finish transfer table follow"
+
+print "strat transfer talbe follow "
+
+query = session1.query(Follow)
+for follow in query:
+    tempfollower = session2.query(UserV2).filter_by(old_id = follow.follower_id).first()
+    tempfollowed = session2.query(UserV2).filter_by(old_id = follow.followed_id).first()
+    temp =FollowV2(timestamp= follow.timestamp,followed_id=tempfollowed.id,follower_id = tempfollower.id)
+    session2.add(temp)
 session2.commit()
-print "finish transfer table post"
+print "finish transfer table follow"
+
+
+
+
+
+
 
 
 

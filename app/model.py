@@ -138,6 +138,41 @@ class Post(BaseModel):
     top = Column(Integer)
     disable = Column(BOOLEAN)
 
+
+class LikeUser(BaseModel):
+    __tablename__='likeusercards'
+    id = Column(Integer,primary_key=True)
+    likeid = Column(Integer)
+    likedid = Column(Integer)
+    timestamp = Column(DATETIME)
+
+
+class FoodCard(BaseModel):
+    __tablename__='foodcards'
+    id = Column(Integer,primary_key=True)
+    title  =Column(VARCHAR)
+    authorid = Column(Integer)
+    imageurl = Column(VARCHAR)
+    location = Column(VARCHAR)
+    longitude = Column(VARCHAR)
+    latitude = Column(VARCHAR)
+    price = Column(VARCHAR)
+    comment = Column(VARCHAR)
+    passflag = Column(VARCHAR)
+    disable = Column(VARCHAR)
+    timestamp = Column(DATETIME)
+    likenumber = Column(Integer)
+
+class Follow(BaseModel):
+    __tablename__='follows'
+    follower_id = Column(Integer,primary_key=True)
+    followed_id = Column(Integer,primary_key=True)
+    timestamp = Column(DATETIME)
+
+
+
+
+
 # class Report(BaseModel):
 #     __tablename__ = 'reports'
 #
