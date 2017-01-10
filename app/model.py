@@ -170,7 +170,52 @@ class Follow(BaseModel):
     timestamp = Column(DATETIME)
 
 
+class UserAttendAcitivity(BaseModel):
+    __tablename__='attentactivitys'
+    id = Column(Integer,primary_key=True)
+    userid = Column(Integer)
+    activityid = Column(Integer)
+    timestamp = Column(DATETIME)
+    state = Column(BOOLEAN)
 
+class UserImage(BaseModel):
+    __tablename__='personalimages'
+    id = Column(Integer,primary_key=True)
+    userid = Column(Integer)
+    timestamp = Column(DATETIME)
+    url = Column(VARCHAR)
+    thumbnail_url = Column(VARCHAR)
+    disable = Column(BOOLEAN)
+
+
+
+class UserLifeImage(BaseModel):
+    __tablename__='activitylifeimages'
+    id = Column(Integer,primary_key=True)
+    activityid = Column(Integer,primary_key=True)
+    userid = Column(Integer,primary_key=True)
+    imageid = Column(Integer,primary_key=True)
+    timestamp = Column(DATETIME)
+
+class ImageUrls(BaseModel):
+    __tablename__='imageurls'
+    id = Column(Integer,primary_key=True)
+    number = Column(VARCHAR,primary_key=True)
+
+class UserVisit(BaseModel):
+    __tablename__='visit'
+    id = Column(Integer,primary_key=True)
+    guestid = Column(Integer)
+    hostid = Column(Integer)
+    timestamp = Column(DATETIME)
+
+
+class UserLikePost(BaseModel):
+    __tablename__='likeposts'
+    id = Column(Integer,primary_key=True)
+    userid = Column(Integer)
+    postid = Column(Integer)
+    timestamp = Column(DATETIME)
 
 
 # class Report(BaseModel):

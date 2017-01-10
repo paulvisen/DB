@@ -40,15 +40,17 @@ session2 = DBSession_now()
 # 17. poseter_image 海报照片
 # 18. Report 举报
 # 19. topic_image 话题照片
-# 20. user_attend_activity_realtion 用户参加活动关系
-# 21. user_image 用户照片
-# 22. user_activity_relation 用户活动关系
-# 23. user_like_activity_relation 用户喜欢关系表
-# 24. user_like_foodcard  用户食物卡片喜欢关系
-# 25. user_like_post  用户文章喜欢关系
-# 26. user_visit 用户访问关系
-# 27. activity_life_image 用户生活照
+# 20. user_attend_activity_realtion 用户参加活动关系 ok
+# 21. user_image 用户照片 ok
+# 22. user_like_activity_relation 用户喜欢关系表
+# 23. user_like_foodcard  用户食物卡片喜欢关系
+# 24. user_like_post  用户文章喜欢关系
+# 25. user_visit 用户访问关系  ok
+# 26. activity_life_image 用户生活照 ok
 #
+
+
+
 # for report in query:
 #     print report.id
 #     print report.authorid
@@ -265,34 +267,124 @@ session2 = DBSession_now()
 # session2.commit()
 # print "finish transfer table follow"
 
-print "strat transfer talbe follow "
 
-query = session1.query(Follow)
-for follow in query:
-    tempfollower = session2.query(UserV2).filter_by(old_id = follow.follower_id).first()
-    tempfollowed = session2.query(UserV2).filter_by(old_id = follow.followed_id).first()
-    temp =FollowV2(timestamp= follow.timestamp,followed_id=tempfollowed.id,follower_id = tempfollower.id)
-    session2.add(temp)
-session2.commit()
-print "finish transfer table follow"
-
-
-
-
+#***************************11******************************
+# print "strat transfer talbe follow "
+#
+# query = session1.query(Follow)
+# for follow in query:
+#     tempfollower = session2.query(UserV2).filter_by(old_id = follow.follower_id).first()
+#     tempfollowed = session2.query(UserV2).filter_by(old_id = follow.followed_id).first()
+#     temp =FollowV2(timestamp= follow.timestamp,followed_id=tempfollowed.id,follower_id = tempfollower.id)
+#     session2.add(temp)
+# session2.commit()
+# print "finish transfer table follow"
 
 
-
-
-
-
-
-
-
-
-
-
-
+#***************************12******************************
+# print "start transfer talbe user_attend_acitivity "
+#
+# query = session1.query(UserAttendAcitivity)
+# for userattend in query:
+#     tempactivity = session2.query(ActivityV2).filter_by(old_id = userattend.activityid).first()
+#     tempuser = session2.query(UserV2).filter_by(old_id = userattend.userid).first()
+#     temp =UserAttendActivityV2(user_id = tempuser.id,activity_id = tempactivity.id,timestamp = userattend.timestamp,state = userattend.state)
+#     session2.add(temp)
+# session2.commit()
+# print "finish transfer table user_attend_acitivity"
 
 
 
+#***************************12******************************
+# print "start transfer talbe user_attend_acitivity "
+#
+# query = session1.query(UserAttendAcitivity)
+# for userattend in query:
+#     tempactivity = session2.query(ActivityV2).filter_by(old_id = userattend.activityid).first()
+#     tempuser = session2.query(UserV2).filter_by(old_id = userattend.userid).first()
+#     temp =UserAttendActivityV2(user_id = tempuser.id,activity_id = tempactivity.id,timestamp = userattend.timestamp,state = userattend.state)
+#     session2.add(temp)
+# session2.commit()
+# print "finish transfer table user_attend_acitivity"
 
+
+
+#***************************13******************************
+# print "start transfer talbe user image "
+#
+# query = session1.query(UserImage)
+# for userimage in query:
+#     tempuser = session2.query(UserV2).filter_by(old_id = userimage.userid).first()
+#     temp =UserImageV2(user_id = tempuser.id,disable = userimage.disable,thumbnail_url = userimage.thumbnail_url,timestamp = userimage.timestamp,
+#             url = userimage.url,old_id= userimage.id)
+#     session2.add(temp)
+# session2.commit()
+# print "finish transfer table user image"
+
+
+#***************************14******************************
+# print "start transfer talbe user life image for activity"
+#
+# query = session1.query(UserLifeImage)
+# for userlifeimage in query:
+#     tempactivity = session2.query(ActivityV2).filter_by(old_id = userlifeimage.activityid).first()
+#     tempuser = session2.query(UserV2).filter_by(old_id = userlifeimage.userid).first()
+#     imageurl = session1.query(ImageUrls).filter_by(id=userlifeimage.imageid).first()
+#     url = 'http://218.244.147.240:80/picture/activitylifeimages/' +str(userlifeimage.activityid)+'-'+str(userlifeimage.userid)+'-'+str(userlifeimage.imageid)
+#     thumb =url+'_thumbnail.jpg'
+#
+#     temp =UserLifeImageV2(user_id = tempuser.id,thumbnail_url = thumb,timestamp = userlifeimage.timestamp,url =url,old_id= userlifeimage.id,
+#                           disable=False,imageid= imageurl.number,activity_id=tempactivity.id)
+#     session2.add(temp)
+# session2.commit()
+# print "finish transfer table user life image for activity"
+
+
+#***************************15******************************
+# print "start transfer talbe user visit relation"
+#
+# query = session1.query(UserVisit)
+# for uservisit in query:
+#     tempvisiteduser = session2.query(UserV2).filter_by(old_id = uservisit.hostid).first()
+#     tempvisitinguser = session2.query(UserV2).filter_by(old_id = uservisit.guestid).first()
+#     temp = UserVisitV2(visited_id=tempvisiteduser.id,visiter_id=tempvisitinguser.id,timestamp=uservisit.timestamp )
+#     session2.add(temp)
+# session2.commit()
+# print "finish transfer table user visit relation"
+
+
+
+#***************************16******************************
+# print "start transfer talbe user like post"
+#
+# query = session1.query(UserLikePost)
+# for userlikepost in query:
+#
+#     try:
+#         temppost = session2.query(PostV2).filter_by(old_id=userlikepost.postid).first()
+#         tempuser = session2.query(UserV2).filter_by(old_id=userlikepost.userid).first()
+#         temp = UserLikePostV2(timestamp = userlikepost.timestamp,post_id=temppost.id,user_id=tempuser.id )
+#         session2.add(temp)
+#         session2.commit()
+#     except Exception, e:
+#         continue
+#
+# print "finish transfer table user like post"
+
+
+#***************************16******************************
+print "start transfer talbe user like post"
+
+query = session1.query(UserLikePost)
+for userlikepost in query:
+
+    try:
+        temppost = session2.query(PostV2).filter_by(old_id=userlikepost.postid).first()
+        tempuser = session2.query(UserV2).filter_by(old_id=userlikepost.userid).first()
+        temp = UserLikePostV2(timestamp = userlikepost.timestamp,post_id=temppost.id,user_id=tempuser.id )
+        session2.add(temp)
+        session2.commit()
+    except Exception, e:
+        continue
+
+print "finish transfer table user like post"

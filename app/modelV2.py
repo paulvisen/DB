@@ -177,6 +177,53 @@ class FollowV2(BaseModel):
     followed_id = Column(BigInteger)
     follower_id = Column(BigInteger)
 
+class UserAttendActivityV2(BaseModel):
+    __tablename__='t_user_attend_activity_relation'
+    id = Column(BigInteger,primary_key=True)
+    state = Column(Integer)
+    timestamp = Column(DATETIME)
+    activity_id = Column(BigInteger)
+    user_id = Column(BigInteger)
+
+class UserImageV2(BaseModel):
+    __tablename__='t_user_image'
+    id = Column(BigInteger,primary_key=True)
+    disable = Column(BOOLEAN)
+    thumbnail_url = Column(VARCHAR)
+    timestamp = Column(DATETIME)
+    url = Column(VARCHAR)
+    user_id = Column(BigInteger)
+    old_id = Column(BigInteger)
+
+class UserLifeImageV2(BaseModel):
+    __tablename__='t_activity_life_image'
+    id = Column(BigInteger,primary_key=True)
+    disable = Column(BOOLEAN)
+    thumbnail_url = Column(VARCHAR)
+    timestamp = Column(DATETIME)
+    url = Column(VARCHAR)
+    imageid = Column(BigInteger)
+    activity_id=Column(BigInteger)
+    user_id = Column(BigInteger)
+    old_id = Column(BigInteger)
+
+class UserVisitV2(BaseModel):
+    __tablename__='t_user_visit_relation'
+    id = Column(BigInteger,primary_key=True)
+    timestamp = Column(DATETIME)
+    visited_id = Column(BigInteger)
+    visiter_id = Column(BigInteger)
+
+class UserLikePostV2(BaseModel):
+    __tablename__='t_user_like_post_relation'
+    id = Column(BigInteger,primary_key=True)
+    timestamp = Column(DATETIME)
+    post_id = Column(BigInteger)
+    user_id = Column(BigInteger)
+
+
+
+
 
 
 
