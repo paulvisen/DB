@@ -218,6 +218,21 @@ class UserLikePost(BaseModel):
     timestamp = Column(DATETIME)
 
 
+class UserLikeFood(BaseModel):
+    __tablename__='likefoodcards'
+    id = Column(Integer,primary_key=True)
+    userid = Column(Integer,primary_key=True)
+    foodcardid = Column(Integer,primary_key=True)
+    timestamp = Column(DATETIME)
+
+class UserLikeActivity(BaseModel):
+    __tablename__='likeactivitys'
+    id = Column(Integer,primary_key=True)
+    userid = Column(Integer)
+    activityid = Column(Integer)
+    timestamp = Column(DATETIME)
+
+
 # class Report(BaseModel):
 #     __tablename__ = 'reports'
 #

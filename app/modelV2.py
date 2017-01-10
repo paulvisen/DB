@@ -221,6 +221,22 @@ class UserLikePostV2(BaseModel):
     post_id = Column(BigInteger)
     user_id = Column(BigInteger)
 
+class UserLikeFoodV2(BaseModel):
+    __tablename__='t_user_like_foodcard'
+    id = Column(BigInteger,primary_key=True)
+    foodcard_id = Column(BigInteger)
+    user_id = Column(BigInteger)
+    timestamp = Column(DATETIME)
+
+
+class UserLikeActivityV2(BaseModel):
+    __tablename__='t_user_like_activity_relation'
+    id = Column(BigInteger,primary_key=True)
+    activity_id = Column(BigInteger)
+    user_id = Column(BigInteger)
+    timestamp = Column(DATETIME)
+
+
 
 
 

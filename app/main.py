@@ -42,9 +42,9 @@ session2 = DBSession_now()
 # 19. topic_image 话题照片
 # 20. user_attend_activity_realtion 用户参加活动关系 ok
 # 21. user_image 用户照片 ok
-# 22. user_like_activity_relation 用户喜欢关系表
-# 23. user_like_foodcard  用户食物卡片喜欢关系
-# 24. user_like_post  用户文章喜欢关系
+# 22. user_like_activity_relation 用户喜欢关系表 ok
+# 23. user_like_foodcard  用户食物卡片喜欢关系 ok
+# 24. user_like_post  用户文章喜欢关系 ok
 # 25. user_visit 用户访问关系  ok
 # 26. activity_life_image 用户生活照 ok
 #
@@ -372,19 +372,49 @@ session2 = DBSession_now()
 # print "finish transfer table user like post"
 
 
-#***************************16******************************
-print "start transfer talbe user like post"
+#***************************17******************************
+# print "start transfer talbe user like post"
+#
+# query = session1.query(UserLikeFood)
+# for userlikefood in query:
+#
+#
+#     tempfood = session2.query(FoodCardV2).filter_by(old_id=userlikefood.foodcardid).first()
+#     tempuser = session2.query(UserV2).filter_by(old_id=userlikefood.userid).first()
+#     temp = UserLikeFoodV2(timestamp = userlikefood.timestamp,foodcard_id=tempfood.id,user_id=tempuser.id )
+#     session2.add(temp)
+#
+# session2.commit()
+# print "finish transfer table user like post"
 
-query = session1.query(UserLikePost)
-for userlikepost in query:
+#***************************18******************************
+# print "start transfer talbe user like activity"
+#
+# query = session1.query(UserLikeActivity)
+# for userlikeactivity in query:
+#     try:
+#         tempactivity = session2.query(ActivityV2).filter_by(old_id=userlikeactivity.activityid).first()
+#         tempuser = session2.query(UserV2).filter_by(old_id=userlikeactivity.userid).first()
+#         temp = UserLikeActivityV2(timestamp = userlikeactivity.timestamp,activity_id=tempactivity.id,user_id=tempuser.id )
+#         session2.add(temp)
+#         session2.commit()
+#     except Exception,e:
+#         continue
+#
+# print "finish transfer table user like activity"
 
-    try:
-        temppost = session2.query(PostV2).filter_by(old_id=userlikepost.postid).first()
-        tempuser = session2.query(UserV2).filter_by(old_id=userlikepost.userid).first()
-        temp = UserLikePostV2(timestamp = userlikepost.timestamp,post_id=temppost.id,user_id=tempuser.id )
-        session2.add(temp)
-        session2.commit()
-    except Exception, e:
-        continue
 
-print "finish transfer table user like post"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
