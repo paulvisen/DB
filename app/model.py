@@ -232,13 +232,88 @@ class UserLikeActivity(BaseModel):
     activityid = Column(Integer)
     timestamp = Column(DATETIME)
 
+class CommentPost(BaseModel):
+    __tablename__='comments'
+    id = Column(Integer,primary_key=True)
+    body = Column(Text)
+    timestamp = Column(DATETIME)
+    authorid = Column(Integer)
+    postid = Column(Integer)
+    commentid = Column(Integer)
+    likenumber = Column(Integer)
+    commentnumber = Column(Integer)
+    disable = Column(BOOLEAN)
+    readflag = Column(BOOLEAN)
 
-# class Report(BaseModel):
-#     __tablename__ = 'reports'
-#
-#     id = Column(Integer, primary_key=True)
-#     authorid = Column(Integer)
-#     body = Column(TEXT)
-#     type = Column(VARCHAR)
-#     typeid = Column(Integer)
-#     timestamp = Column(DATETIME)
+class CommentAct(BaseModel):
+    __tablename__='commentacts'
+    id = Column(Integer,primary_key=True)
+    body = Column(Text)
+    timestamp = Column(DATETIME)
+    authorid = Column(Integer)
+    activityid = Column(Integer)
+    commentid = Column(Integer)
+    likenumber = Column(Integer)
+    commentnumber = Column(Integer)
+    disable = Column(BOOLEAN)
+
+class CommentActImageAttach(BaseModel):
+    __tablename__='commentactimageattachs'
+    id =Column(Integer,primary_key=True)
+    commentid = Column(Integer)
+    imageid = Column(Integer)
+    timestamp = Column(DATETIME)
+
+class CommentPostImageAttach(BaseModel):
+    __tablename__='commentimageattachs'
+    id = Column(Integer,primary_key=True)
+    commentid = Column(Integer)
+    imageid = Column(Integer)
+    timestamp = Column(DATETIME)
+
+
+class Report(BaseModel):
+    __tablename__ = 'reports'
+
+    id = Column(Integer, primary_key=True)
+    authorid = Column(Integer)
+    body = Column(TEXT)
+    type = Column(VARCHAR)
+    typeid = Column(Integer)
+    timestamp = Column(DATETIME)
+
+class PostImage(BaseModel):
+    __tablename__ = 'postimageattachs'
+    id = Column(Integer,primary_key=True)
+    postid = Column(Integer,primary_key=True)
+    imageid = Column(Integer,primary_key=True)
+    timestamp = Column(DATETIME)
+
+
+class ActivityPosterImage(BaseModel):
+    __tablename__='activitytopofficials'
+    id = Column(Integer,primary_key=True)
+    imageurl = Column(VARCHAR)
+    activityid = Column(Integer)
+    activitytitle = Column(VARCHAR)
+    rank = Column(Integer)
+
+class Message(BaseModel):
+    __tablename__='messages'
+    id = Column(Integer,primary_key=True)
+    sendid = Column(VARCHAR)
+    recid  =Column(VARCHAR)
+    text = Column(VARCHAR)
+    state = Column(VARCHAR)
+    sendtime = Column(DATETIME)
+
+
+class MessageImage(BaseModel):
+    __tablename__='messageandimages'
+    message_id = Column(Integer,primary_key=True)
+    image_id = Column(Integer,primary_key=True)
+
+
+
+
+

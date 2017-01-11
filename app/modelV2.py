@@ -9,15 +9,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 BaseModel = declarative_base()
 
-# class ReportV2(BaseModel):
-#     __tablename__ = 'reports'
-#
-#     id = Column(Integer, primary_key=True)
-#     authorid = Column(Integer)
-#     body = Column(TEXT)
-#     type = Column(VARCHAR)
-#     typeid = Column(Integer)
-#     timestamp = Column(DATETIME)
+
 
 class AvatarVoiceV2(BaseModel):
     __tablename__='t_avatar_voice'
@@ -122,7 +114,6 @@ class CheckMsgsV2(BaseModel):
 class TopicV2(BaseModel):
     __tablename__='t_topic'
     id = Column(BigInteger,primary_key=True)
-    image_url = Column(VARCHAR)
     note = Column(VARCHAR)
     number = Column(Integer)
     rank = Column(Integer)
@@ -131,6 +122,17 @@ class TopicV2(BaseModel):
     timestamp = Column(DATETIME)
     postnumber = Column(Integer)
     old_id = Column(BigInteger)
+
+class TopicImageV2(BaseModel):
+    __tablename__='t_topic_image'
+    id = Column(BigInteger,primary_key=True)
+    disable = Column(BOOLEAN)
+    thumbnail_url = Column(VARCHAR)
+    timestamp = Column(DATETIME)
+    url = Column(VARCHAR)
+    topic_id = Column(VARCHAR)
+
+
 
 class PostV2(BaseModel):
 
@@ -236,9 +238,79 @@ class UserLikeActivityV2(BaseModel):
     user_id = Column(BigInteger)
     timestamp = Column(DATETIME)
 
+class CommentV2(BaseModel):
+    __tablename__='t_comment'
+    id = Column(BigInteger,primary_key=True)
+    content = Column(LONGTEXT)
+    has_image = Column(BOOLEAN)
+    state = Column(BOOLEAN)
+    timestamp = Column(DATETIME)
+    type = Column(Integer)
+    activity_id = Column(BigInteger)
+    authoruser_id= Column(BigInteger)
+    comment_id = Column(BigInteger)
+    post_id = Column(BigInteger)
+    to_user_id = Column(BigInteger)
+    old_id = Column(BigInteger)
+
+class CommentImageV2(BaseModel):
+    __tablename__='t_comment_image'
+    id = Column(BigInteger,primary_key=True)
+    disable = Column(BOOLEAN)
+    thumbnail_url = Column(VARCHAR)
+    timestamp = Column(DATETIME)
+    url = Column(VARCHAR)
+    comment_id = Column(BigInteger)
+
+class ReportV2(BaseModel):
+    __tablename__ = 't_report'
+    id = Column(BigInteger, primary_key=True)
+    be_reported_id = Column(BigInteger)
+    body = Column(LONGTEXT)
+    type = Column(Integer)
+    authoruser_id = Column(BigInteger)
+    timestamp = Column(DATETIME)
+    type_id = Column(Integer)
+
+class PostImageV2(BaseModel):
+    __tablename__ = 't_post_image'
+    id = Column(BigInteger,primary_key=True)
+    disable = Column(BOOLEAN)
+    thumbnail_url = Column(VARCHAR)
+    timestamp = Column(DATETIME)
+    url = Column(VARCHAR)
+    post_id = Column(BigInteger)
 
 
+class PosterImageV2(BaseModel):
+    __tablename__='t_poster_image'
+    id = Column(BigInteger,primary_key=True)
+    disable = Column(BOOLEAN)
+    thumbnail_url = Column(VARCHAR)
+    timestamp = Column(DATETIME)
+    url = Column(VARCHAR)
+    activity_id = Column(BigInteger)
+    rank = Column(Integer)
 
+class MessageV2(BaseModel):
+    __tablename__='t_message'
+    id =Column(BigInteger,primary_key=True)
+    has_image = Column(BOOLEAN)
+    state = Column(BOOLEAN)
+    text = Column(TEXT)
+    timestamp = Column(DATETIME)
+    sendfrom_id = Column(BigInteger)
+    sendto_id = Column(BigInteger)
+    old_id = Column(BigInteger)
+
+class MessageImageV2(BaseModel):
+    __tablename__='t_message_image'
+    id = Column(BigInteger,primary_key=True)
+    disable = Column(BOOLEAN)
+    thumbnail_url = Column(VARCHAR)
+    timestamp = Column(DATETIME)
+    url = Column(VARCHAR)
+    message_id = Column(BigInteger)
 
 
 

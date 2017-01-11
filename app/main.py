@@ -29,17 +29,17 @@ session2 = DBSession_now()
 # 6. checkmsg 短信验证 ok
 # 7. topic 话题 ok
 # 8. post 文章 ok
-# 9. comment 评论
-# 10. comment_image 评论图片
+# 9. comment 评论 ok
+# 10. comment_image 评论图片 ok
 # 11. follow_id 关注 ok
 # 12. foodcard 食物照片 ok
 # 13. like_user_id 喜欢关系  ok
-# 14. message消息
+# 14. message消息  ok
 # 15. message_image 图片消息
-# 16. post_image 文章图片
-# 17. poseter_image 海报照片
-# 18. Report 举报
-# 19. topic_image 话题照片
+# 16. post_image 文章图片 ok
+# 17. poseter_image 海报照片 ok
+# 18. Report 举报 ok
+# 19. topic_image 话题照片 ok
 # 20. user_attend_activity_realtion 用户参加活动关系 ok
 # 21. user_image 用户照片 ok
 # 22. user_like_activity_relation 用户喜欢关系表 ok
@@ -50,28 +50,7 @@ session2 = DBSession_now()
 #
 
 
-
-# for report in query:
-#     print report.id
-#     print report.authorid
-#     print report.body
-#     print report.type
-#     print report.typeid
-#     print report.timestamp
-
-# print "strat transfer talbe avatarVoice"
-# query =session1.query(AvatarVoice)
-# for avatarVoice in query:
-#     avatatVoiceV2 =AvatarVoiceV2(avatar_number=avatarVoice.avatar_number,avatar_url=avatarVoice.avatarurl,
-#             card_flag=avatarVoice.cardflag,disable=avatarVoice.disable,gender=avatarVoice.gender,name=avatarVoice.name,
-#                                  voice_number =avatarVoice.voice_number,voice_url=avatarVoice.voiceurl)
-#     session2.add(avatatVoiceV2)
-# session2.commit()
-# print "finish transfer table avatarVoice"
-
-# user.old_id 补充对应的主键的信息
-
-#   *****************12**************************
+#   *****************1  2**************************
 
 # print "strat transfer talbe User AvatarVoices "
 # query = session1.query(User)
@@ -193,20 +172,22 @@ session2 = DBSession_now()
 # print "finish transfer table topic"
 
 #***************************8******************************
-
-# print "strat transfer talbe post "
+# print "strat transfer talbe topic and Image"
 #
-# query = session1.query(Post)
-# for post in query:
+# query = session1.query(Topic)
+# for topic in query:
 #     #关联avatarvoice
-#     tempuser = session2.query(UserV2).filter_by(old_id =post.authorid).first()
-#     temptopic = session2.query(TopicV2).filter_by(old_id = post.topicid).first()
-#     if tempuser is not None and temptopic is not None:
-#         postV2 = PostV2(body = post.body,disable = post.disable,timestamp = post.timestamp,title= post.title,top=post.top,publish_user_id = tempuser.id,
-#                     topic_id= temptopic.id,old_id = post.id)
-#         session2.add(postV2)
-# session2.commit()
-# print "finish transfer table post"
+#     topicV2 = TopicV2(note = topic.note,number = topic.number,rank = topic.rank,slogan = topic.slogan,
+#                       theme = topic.theme,postnumber = topic.postnumber,old_id = topic.id)
+#     session2.add(topicV2)
+#     session2.commit()
+#     topicimage = TopicImageV2(disable =False,thumbnail_url=topic.imageurl,url = topic.imageurl,topic_id = topicV2.id)
+#
+#     session2.add(topicimage)
+#     session2.commit()
+#
+# print "finish transfer table topic"
+
 
 #***************************9******************************
 
@@ -404,12 +385,196 @@ session2 = DBSession_now()
 # print "finish transfer table user like activity"
 
 
+#***************************19******************************
+# print "start transfer talbe comment"
+#
+# queryAct = session1.query(CommentAct)
+# queryPost = session1.query(CommentPost)
+# for commentact in queryAct:
+#     tempactivity = session2.query(ActivityV2).filter_by(old_id=commentact.activityid).first()
+#     tempuser = session2.query(UserV2).filter_by(old_id=commentact.authorid).first()
+#     hasimage = session1.query(CommentActImageAttach).filter_by(commentid=commentact.id).first()
+#     if hasimage is not None:
+#         hasimage = True
+#     else:
+#         hasimage =False
+#
+#     to_user_id = None
+#     if commentact.commentid != -1:
+#         tempcomment = session1.query(CommentAct).filter_by(id=commentact.commentid).first()
+#         to_user_id = session2.query(UserV2).filter_by(old_id = commentact.authorid).first()
+#         to_user_id = to_user_id.id
+#
+#     tempCommentId =None
+#     if commentact.commentid !=-1:
+#         newComment = session2.query(CommentV2).filter_by(old_id=commentact.commentid).first()
+#         tempCommentId =newComment.id
+#
+#
+#
+#     temp = CommentV2(timestamp = commentact.timestamp,content=commentact.body,has_image = hasimage,state = True,
+#         type = 1,activity_id=tempactivity.id,authoruser_id=tempuser.id,comment_id=tempCommentId,to_user_id=to_user_id,old_id=commentact.id)
+#     session2.add(temp)
+#
+#
+#
+# print "-----------------------------------"
+#
+# for commentpost in queryPost:
+#
+#     temppost = session2.query(PostV2).filter_by(old_id =commentpost.postid).first()
+#     tempauthoruser = session2.query(UserV2).filter_by(old_id=commentpost.authorid).first()
+#     hasimage = session1.query(CommentPostImageAttach).filter_by(commentid= commentpost.id).first()
+#     if hasimage is not None:
+#         hasimage = True
+#     else:
+#         hasimage = False
+#
+#     to_user_id =None
+#     if commentpost.commentid !=-1:
+#         tempcomment = session1.query(CommentPost).filter_by(id=commentpost.commentid).first()
+#         to_user_id = session2.query(UserV2).filter_by(old_id =tempcomment.authorid).first()
+#         to_user_id = to_user_id.id
+#
+#     tempCommentId =None
+#     if commentact.commentid !=-1:
+#         newComment = session2.query(CommentV2).filter_by(old_id=commentpost.commentid).first()
+#         tempCommentId =newComment.id
+#
+#
+#     temp = CommentV2(timestamp =commentpost.timestamp,content= commentpost.body,has_image=hasimage,state = commentpost.readflag,
+#         type = 0,post_id =temppost.id,authoruser_id=tempauthoruser.id,comment_id=tempCommentId,to_user_id=to_user_id,old_id= commentpost.id)
+#     session2.add(temp)
+# session2.commit()
+#
+# print "finish transfer table comment"
+
+#***************************20******************************
+# print "start transfer talbe commentimage"
+#
+# queryActImage = session1.query(CommentActImageAttach)
+# queryPostImage = session1.query(CommentPostImageAttach)
+# for queryactimage in queryActImage:
+#     tempactcomment = session1.query(CommentAct).filter_by(id=queryactimage.commentid).first()
+#     url ="http://218.244.147.240/activity/commentactsImage/"+str(tempactcomment.activityid)+'-'+str(queryactimage.commentid)+'-'+str(queryactimage.imageid)
+#     thumb = url +"_thumbnail.jpg"
+#     nowcomment = session2.query(CommentV2).filter_by(old_id=tempactcomment.id).filter_by(type=1).first()
+#     temp = CommentImageV2(disable=False,thumbnail_url =thumb,url = url,timestamp = queryactimage.timestamp,comment_id= nowcomment.id)
+#     session2.add(temp)
+#
+#
+#
+# print "-----------------------------------"
+#
+# for querypostimage in queryPostImage:
+#     temppostcomment = session1.query(CommentPost).filter_by(id=querypostimage.commentid).first()
+#     temppost = session1.query(Post).filter_by(id=temppostcomment.postid).first()
+#     url ="http://218.244.147.240/community/commentattachs/"+str(temppost.topicid)+'-'+str(querypostimage.commentid)+'-'+str(querypostimage.imageid)
+#     thumb = url +"_thumbnail.jpg"
+#     nowcomment = session2.query(CommentV2).filter_by(old_id=temppostcomment.id).filter_by(type=0).first()
+#     temp = CommentImageV2(disable=False,thumbnail_url =thumb,url = url,timestamp = querypostimage.timestamp,comment_id= nowcomment.id)
+#     session2.add(temp)
+#
+# session2.commit()
+#
+# print "finish transfer table commentimage"
+
+
+#***************************21******************************
+
+# print "strat transfer talbe Report"
+#
+# query = session1.query(Report)
+# for  report in query:
+#     typeflag = 0
+#     if report.type =='user':
+#         typeflag = 0
+#     elif report.type == 'post':
+#         typeflag = 1
+#     elif report.type == 'activity':
+#         typeflag = 2
+#     else:
+#         typeflag = 3
+#
+#     user = session2.query(UserV2).filter_by(old_id = report.authorid).first()
+#
+#     reportV2 = ReportV2(be_reported_id = None,body = report.body,timestamp = report.timestamp,type = typeflag,
+#         authoruser_id = user.id,type_id = report.typeid)
+#     session2.add(reportV2)
+# session2.commit()
+#
+# print "finish transfer table Report"
+
+
+#***************************22******************************
+
+# print "strat transfer talbe postimage"
+# query = session1.query(PostImage)
+# for postimage in query:
+#     post = session1.query(Post).filter_by(id =postimage.postid).first()
+#     user = session2.query(UserV2).filter_by(old_id = post.authorid).first()
+#     url = "http://218.244.147.240/community/postattachs/"+str(post.topicid)+'-'+str(postimage.postid)+'-'+str(postimage.imageid)
+#     thumb = url+"_thumbnail.jpg"
+#     nowpost = session2.query(PostV2).filter_by(old_id=post.id).first()
+#     postimageV2 = PostImageV2(disable = False,thumbnail_url =thumb,timestamp = postimage.timestamp,url = url,post_id =nowpost.id)
+#     session2.add(postimageV2)
+# session2.commit()
+#
+# print "finish transfer table postimage"
+
+
+#***************************23******************************
+
+# print "strat transfer talbe activity Poster Image"
+# query = session1.query(ActivityPosterImage)
+# for posterimage in query:
+#     activity = session2.query(ActivityV2).filter_by(old_id = posterimage.activityid).first()
+#     tempposter = PosterImageV2(disable = False,thumbnail_url=posterimage.imageurl,url= posterimage.imageurl,activity_id = activity.id,rank = posterimage.rank)
+#     session2.add(tempposter)
+# session2.commit()
+#
+# print "finish transfer table activity Poster Image"
 
 
 
+#***************************24******************************
+#
+# print "strat transfer talbe message"
+# query = session1.query(Message)
+# for message in query:
+#     messageimage = session1.query(MessageImage).filter_by(message_id = message.id).first()
+#     hasimage = False
+#     if MessageImage is not None:
+#         hasimage = True
+#     nowsend = session2.query(UserV2).filter_by(old_id=message.sendid).first()
+#     nowrec = session2.query(UserV2).filter_by(old_id = message.recid).first()
+#     if nowsend is None or nowrec is None:
+#         continue
+#     tempmessagev2 = MessageV2(has_image= hasimage,state=message.state,text= message.text,timestamp  = message.sendtime,
+#                            sendfrom_id = nowsend.id,
+#                               sendto_id=nowrec.id,old_id = message.id)
+#     session2.add(tempmessagev2)
+# session2.commit()
+#
+# print "finish transfer table message"
+
+#***************************25******************************部分数据无法导出
+print "start transfer table message image"
+query = session1.query(MessageImage)
+for messageimage in query:
+    try:
+        url="http://218.244.147.240/message/image/"+str(messageimage.message_id)+'-'+str(messageimage.image_id)
+        thumb= url+"_thumbnail.jpg"
+        tempmessage = session2.query(MessageV2).filter_by(old_id = messageimage.message_id).first()
+
+        tempimagev2 = MessageImageV2(disable=False,thumbnail_url = thumb,url=url,message_id =tempmessage.id)
+        session2.add(tempimagev2)
+        session2.commit()
+    except Exception, e:
+        continue
 
 
-
+print "finish transfer table message image"
 
 
 
