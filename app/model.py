@@ -314,6 +314,12 @@ class MessageImage(BaseModel):
     image_id = Column(Integer,primary_key=True)
 
 
-
+class CommunityPosterImage(BaseModel):
+    __tablename__='topofficials'
+    id = Column(Integer,primary_key=True)
+    imageurl = Column(VARCHAR)
+    postid = Column(Integer)
+    posttitle= Column(VARCHAR)
+    rank = Column(Integer)
 
 

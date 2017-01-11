@@ -37,7 +37,7 @@ session2 = DBSession_now()
 # 14. message消息  ok
 # 15. message_image 图片消息
 # 16. post_image 文章图片 ok
-# 17. poseter_image 海报照片 ok
+# 17. activity_poseter_image 海报照片 ok
 # 18. Report 举报 ok
 # 19. topic_image 话题照片 ok
 # 20. user_attend_activity_realtion 用户参加活动关系 ok
@@ -47,7 +47,7 @@ session2 = DBSession_now()
 # 24. user_like_post  用户文章喜欢关系 ok
 # 25. user_visit 用户访问关系  ok
 # 26. activity_life_image 用户生活照 ok
-#
+# 27. community_poster_image 社区轮播照片
 
 
 #   *****************1  2**************************
@@ -559,27 +559,32 @@ session2 = DBSession_now()
 # print "finish transfer table message"
 
 #***************************25******************************部分数据无法导出
-print "start transfer table message image"
-query = session1.query(MessageImage)
-for messageimage in query:
-    try:
-        url="http://218.244.147.240/message/image/"+str(messageimage.message_id)+'-'+str(messageimage.image_id)
-        thumb= url+"_thumbnail.jpg"
-        tempmessage = session2.query(MessageV2).filter_by(old_id = messageimage.message_id).first()
-
-        tempimagev2 = MessageImageV2(disable=False,thumbnail_url = thumb,url=url,message_id =tempmessage.id)
-        session2.add(tempimagev2)
-        session2.commit()
-    except Exception, e:
-        continue
-
-
-print "finish transfer table message image"
-
-
+# print "start transfer table message image"
+# query = session1.query(MessageImage)
+# for messageimage in query:
+#     try:
+#         url="http://218.244.147.240/message/image/"+str(messageimage.message_id)+'-'+str(messageimage.image_id)
+#         thumb= url+"_thumbnail.jpg"
+#         tempmessage = session2.query(MessageV2).filter_by(old_id = messageimage.message_id).first()
+#
+#         tempimagev2 = MessageImageV2(disable=False,thumbnail_url = thumb,url=url,message_id =tempmessage.id)
+#         session2.add(tempimagev2)
+#         session2.commit()
+#     except Exception, e:
+#         continue
+#
+#
+# print "finish transfer table message image"
 
 
-
-
+#***************************26******************************
+# print "start transfer table community poster image"
+# query = session1.query(CommunityPosterImage)
+# for temp in query:
+#     tempPost = session2.query(PostV2).filter_by(old_id=temp.postid).first()
+#     communtyposterv2 = CommunityPosterImageV2(disable = False,thumbnail_url = temp.imageurl,url = temp.imageurl,rank =temp.rank,post_id = tempPost.id)
+#     session2.add(communtyposterv2)
+# session2.commit()
+# print "finish transfer table community poster image"
 
 

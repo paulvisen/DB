@@ -283,7 +283,7 @@ class PostImageV2(BaseModel):
 
 
 class PosterImageV2(BaseModel):
-    __tablename__='t_poster_image'
+    __tablename__='t_activity_poster_image'
     id = Column(BigInteger,primary_key=True)
     disable = Column(BOOLEAN)
     thumbnail_url = Column(VARCHAR)
@@ -311,6 +311,18 @@ class MessageImageV2(BaseModel):
     timestamp = Column(DATETIME)
     url = Column(VARCHAR)
     message_id = Column(BigInteger)
+
+
+class CommunityPosterImageV2(BaseModel):
+    __tablename__='t_community_poster_image'
+    id = Column(BigInteger,primary_key=True)
+    disable = Column(BOOLEAN)
+    thumbnail_url = Column(VARCHAR)
+    timestamp = Column(DATETIME)
+    url = Column(VARCHAR)
+    rank = Column(Integer)
+    post_id = Column(BigInteger)
+
 
 
 
