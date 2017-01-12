@@ -10,7 +10,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from model import *
 from modelV2 import  *
 ORIGINAL_DB_CONNECT_STRING = 'mysql+mysqldb://root:SEUqianshou2015@218.244.147.240:3306/flasktestdb?charset=utf8'
-New_DB_CONNECT_STRING ='mysql+mysqldb://root:qwer@localhost/weme?charset=utf8'
+New_DB_CONNECT_STRING ='mysql+mysqldb://root:qwer@localhost/wemedev?charset=utf8'
 
 
 engine_original = create_engine(ORIGINAL_DB_CONNECT_STRING)
@@ -48,10 +48,12 @@ session2 = DBSession_now()
 # 25. user_visit 用户访问关系  ok
 # 26. activity_life_image 用户生活照 ok
 # 27. community_poster_image 社区轮播照片
+# 28. user_like_comment  用户喜欢评论
 
 
-#   *****************1  2**************************
-
+#
+# print "*****************1  2**************************"
+#
 # print "strat transfer talbe User AvatarVoices "
 # query = session1.query(User)
 # for user in query:
@@ -86,10 +88,10 @@ session2 = DBSession_now()
 #         session2.commit()
 #
 # print "finish transfer table User AvatarVoices"
-
-#***************************3******************************
-
-
+#
+# print "***************************3******************************"
+#
+#
 # print "strat transfer talbe Avtivity "
 # query = session2.query(UserV2)
 # for user in query:
@@ -108,12 +110,12 @@ session2 = DBSession_now()
 #         continue
 # session2.commit()
 # print "finish transfer table Activity"
-
-
-
-
-#***************************4******************************
-
+#
+#
+#
+#
+# print "***************************4******************************"
+#
 # print "strat transfer talbe AvtivityImage "
 #
 # query = session2.query(ActivityV2)
@@ -129,9 +131,9 @@ session2 = DBSession_now()
 #         continue
 # session2.commit()
 # print "finish transfer table AvtivityImage"
-
-#***************************5******************************
-
+#
+# print "***************************5******************************"
+#
 # print "strat transfer talbe AndroidVersion "
 #
 # query = session1.query(AndroidVersions)
@@ -142,11 +144,11 @@ session2 = DBSession_now()
 #     session2.add(androidVersionV2)
 # session2.commit()
 # print "finish transfer table AndroidVersion"
-
-
-
-#***************************6******************************
-
+#
+#
+#
+# print "***************************6******************************"
+#
 # print "strat transfer talbe checkMsgs "
 #
 # query = session1.query(CheckMsgs)
@@ -156,29 +158,32 @@ session2 = DBSession_now()
 #     session2.add(checkMsgV2)
 # session2.commit()
 # print "finish transfer table checkMsgs"
-
-
-#***************************7******************************
-
-# print "strat transfer talbe topic "
 #
-# query = session1.query(Topic)
-# for topic in query:
-#     #关联avatarvoice
-#     topicV2 = TopicV2(image_url=topic.imageurl,note = topic.note,number = topic.number,rank = topic.rank,slogan = topic.slogan,
-#                       theme = topic.theme,postnumber = topic.postnumber,old_id = topic.id)
-#     session2.add(topicV2)
+# print "***************************7******************************"
+# print "strat transfer talbe post "
+#
+# query = session1.query(Post)
+# for post in query:
+#   #关联avatarvoice
+#   tempuser = session2.query(UserV2).filter_by(old_id =post.authorid).first()
+#   temptopic = session2.query(TopicV2).filter_by(old_id = post.topicid).first()
+#   if tempuser is not None and temptopic is not None:
+#       postV2 = PostV2(body = post.body,disable = post.disable,timestamp = post.timestamp,title= post.title,top=post.top,publish_user_id = tempuser.id,
+#                   topic_id= temptopic.id,old_id = post.id)
+#       session2.add(postV2)
 # session2.commit()
-# print "finish transfer table topic"
-
-#***************************8******************************
+# print "finish transfer table post"
+#
+#
+#
+# print "***************************8******************************"
 # print "strat transfer talbe topic and Image"
 #
 # query = session1.query(Topic)
 # for topic in query:
 #     #关联avatarvoice
 #     topicV2 = TopicV2(note = topic.note,number = topic.number,rank = topic.rank,slogan = topic.slogan,
-#                       theme = topic.theme,postnumber = topic.postnumber,old_id = topic.id)
+#                       theme = topic.theme,post_number = topic.postnumber,old_id = topic.id)
 #     session2.add(topicV2)
 #     session2.commit()
 #     topicimage = TopicImageV2(disable =False,thumbnail_url=topic.imageurl,url = topic.imageurl,topic_id = topicV2.id)
@@ -187,10 +192,10 @@ session2 = DBSession_now()
 #     session2.commit()
 #
 # print "finish transfer table topic"
-
-
-#***************************9******************************
-
+#
+#
+# print "***************************9******************************"
+#
 # print "strat transfer talbe likeuser "
 #
 # query = session1.query(LikeUser)
@@ -202,26 +207,11 @@ session2 = DBSession_now()
 #     session2.add(temp)
 # session2.commit()
 # print "finish transfer table likeuser"
-
-
-#***************************10******************************
-
-# print "strat transfer talbe likeuser "
 #
-# query = session1.query(LikeUser)
-# for likeuser in query:
-#     #关联avatarvoice
-#     templikeuser = session2.query(UserV2).filter_by(old_id =likeuser.likeid).first()
-#     templikeduser = session2.query(UserV2).filter_by(old_id = likeuser.likedid).first()
-#     temp = LikeUserV2(timestamp = likeuser.timestamp,liked_id = templikeduser.id,liker_id=templikeuser.id)
-#     session2.add(temp)
-# session2.commit()
-# print "finish transfer table likeuser"
-
-
-
-
-#***************************10******************************
+#
+#
+#
+# print "***************************10******************************"
 #
 # print "strat transfer talbe foodcard "
 #
@@ -234,9 +224,9 @@ session2 = DBSession_now()
 #     session2.add(temp)
 # session2.commit()
 # print "finish transfer table foodcard"
-
-#***************************11******************************
-
+#
+# print "***************************11******************************"
+#
 # print "strat transfer talbe follow "
 #
 # query = session1.query(Follow)
@@ -247,22 +237,9 @@ session2 = DBSession_now()
 #     session2.add(temp)
 # session2.commit()
 # print "finish transfer table follow"
-
-
-#***************************11******************************
-# print "strat transfer talbe follow "
 #
-# query = session1.query(Follow)
-# for follow in query:
-#     tempfollower = session2.query(UserV2).filter_by(old_id = follow.follower_id).first()
-#     tempfollowed = session2.query(UserV2).filter_by(old_id = follow.followed_id).first()
-#     temp =FollowV2(timestamp= follow.timestamp,followed_id=tempfollowed.id,follower_id = tempfollower.id)
-#     session2.add(temp)
-# session2.commit()
-# print "finish transfer table follow"
-
-
-#***************************12******************************
+#
+# print "***************************12******************************"
 # print "start transfer talbe user_attend_acitivity "
 #
 # query = session1.query(UserAttendAcitivity)
@@ -273,24 +250,11 @@ session2 = DBSession_now()
 #     session2.add(temp)
 # session2.commit()
 # print "finish transfer table user_attend_acitivity"
-
-
-
-#***************************12******************************
-# print "start transfer talbe user_attend_acitivity "
 #
-# query = session1.query(UserAttendAcitivity)
-# for userattend in query:
-#     tempactivity = session2.query(ActivityV2).filter_by(old_id = userattend.activityid).first()
-#     tempuser = session2.query(UserV2).filter_by(old_id = userattend.userid).first()
-#     temp =UserAttendActivityV2(user_id = tempuser.id,activity_id = tempactivity.id,timestamp = userattend.timestamp,state = userattend.state)
-#     session2.add(temp)
-# session2.commit()
-# print "finish transfer table user_attend_acitivity"
-
-
-
-#***************************13******************************
+#
+#
+#
+# print "***************************13******************************"
 # print "start transfer talbe user image "
 #
 # query = session1.query(UserImage)
@@ -301,9 +265,9 @@ session2 = DBSession_now()
 #     session2.add(temp)
 # session2.commit()
 # print "finish transfer table user image"
-
-
-#***************************14******************************
+#
+#
+# print "***************************14******************************"
 # print "start transfer talbe user life image for activity"
 #
 # query = session1.query(UserLifeImage)
@@ -319,9 +283,9 @@ session2 = DBSession_now()
 #     session2.add(temp)
 # session2.commit()
 # print "finish transfer table user life image for activity"
-
-
-#***************************15******************************
+#
+#
+# print "***************************15******************************"
 # print "start transfer talbe user visit relation"
 #
 # query = session1.query(UserVisit)
@@ -333,9 +297,9 @@ session2 = DBSession_now()
 # session2.commit()
 # print "finish transfer table user visit relation"
 
-
-
-#***************************16******************************
+#
+#
+# print "***************************16******************************"
 # print "start transfer talbe user like post"
 #
 # query = session1.query(UserLikePost)
@@ -352,23 +316,26 @@ session2 = DBSession_now()
 #
 # print "finish transfer table user like post"
 
-
-#***************************17******************************
-# print "start transfer talbe user like post"
+#
+# print "***************************17******************************"
+# print "start transfer talbe user like food"
 #
 # query = session1.query(UserLikeFood)
 # for userlikefood in query:
 #
+#     try:
+#         tempfood = session2.query(FoodCardV2).filter_by(old_id=userlikefood.foodcardid).first()
+#         tempuser = session2.query(UserV2).filter_by(old_id=userlikefood.userid).first()
+#         temp = UserLikeFoodV2(timestamp = userlikefood.timestamp,foodcard_id=tempfood.id,user_id=tempuser.id )
+#         session2.add(temp)
+#         session2.commit()
+#     except Exception,e:
+#         session2.rollback()
+#         continue
 #
-#     tempfood = session2.query(FoodCardV2).filter_by(old_id=userlikefood.foodcardid).first()
-#     tempuser = session2.query(UserV2).filter_by(old_id=userlikefood.userid).first()
-#     temp = UserLikeFoodV2(timestamp = userlikefood.timestamp,foodcard_id=tempfood.id,user_id=tempuser.id )
-#     session2.add(temp)
-#
-# session2.commit()
-# print "finish transfer table user like post"
+# print "finish transfer table user like food"
 
-#***************************18******************************
+# print "***************************18******************************"
 # print "start transfer talbe user like activity"
 #
 # query = session1.query(UserLikeActivity)
@@ -383,9 +350,9 @@ session2 = DBSession_now()
 #         continue
 #
 # print "finish transfer table user like activity"
+#
 
-
-#***************************19******************************
+# print "***************************19******************************"
 # print "start transfer talbe comment"
 #
 # queryAct = session1.query(CommentAct)
@@ -443,13 +410,16 @@ session2 = DBSession_now()
 #
 #
 #     temp = CommentV2(timestamp =commentpost.timestamp,content= commentpost.body,has_image=hasimage,state = commentpost.readflag,
-#         type = 0,post_id =temppost.id,authoruser_id=tempauthoruser.id,comment_id=tempCommentId,to_user_id=to_user_id,old_id= commentpost.id)
+#         type = 0,post_id =temppost.id,
+#                      authoruser_id=tempauthoruser.id,
+#                      comment_id=tempCommentId,to_user_id=to_user_id,old_id= commentpost.id)
 #     session2.add(temp)
 # session2.commit()
 #
+#
 # print "finish transfer table comment"
-
-#***************************20******************************
+#
+# print "***************************20******************************"
 # print "start transfer talbe commentimage"
 #
 # queryActImage = session1.query(CommentActImageAttach)
@@ -479,9 +449,9 @@ session2 = DBSession_now()
 #
 # print "finish transfer table commentimage"
 
-
-#***************************21******************************
-
+#
+# print "***************************21******************************"
+#
 # print "strat transfer talbe Report"
 #
 # query = session1.query(Report)
@@ -499,15 +469,15 @@ session2 = DBSession_now()
 #     user = session2.query(UserV2).filter_by(old_id = report.authorid).first()
 #
 #     reportV2 = ReportV2(be_reported_id = None,body = report.body,timestamp = report.timestamp,type = typeflag,
-#         authoruser_id = user.id,type_id = report.typeid)
+#         authoruser_id = user.id,typeid = report.typeid)
 #     session2.add(reportV2)
 # session2.commit()
 #
 # print "finish transfer table Report"
-
-
-#***************************22******************************
-
+#
+#
+# print "***************************22******************************"
+#
 # print "strat transfer talbe postimage"
 # query = session1.query(PostImage)
 # for postimage in query:
@@ -521,10 +491,10 @@ session2 = DBSession_now()
 # session2.commit()
 #
 # print "finish transfer table postimage"
-
-
-#***************************23******************************
-
+#
+#
+# print "***************************23******************************"
+#
 # print "strat transfer talbe activity Poster Image"
 # query = session1.query(ActivityPosterImage)
 # for posterimage in query:
@@ -534,10 +504,10 @@ session2 = DBSession_now()
 # session2.commit()
 #
 # print "finish transfer table activity Poster Image"
-
-
-
-#***************************24******************************
+#
+#
+#
+# print "***************************24******************************"
 #
 # print "strat transfer talbe message"
 # query = session1.query(Message)
@@ -557,8 +527,8 @@ session2 = DBSession_now()
 # session2.commit()
 #
 # print "finish transfer table message"
-
-#***************************25******************************部分数据无法导出
+#
+# print "***************************25******************************部分数据无法导出"
 # print "start transfer table message image"
 # query = session1.query(MessageImage)
 # for messageimage in query:
@@ -577,7 +547,7 @@ session2 = DBSession_now()
 # print "finish transfer table message image"
 
 
-#***************************26******************************
+# print "***************************26******************************"
 # print "start transfer table community poster image"
 # query = session1.query(CommunityPosterImage)
 # for temp in query:
@@ -587,4 +557,13 @@ session2 = DBSession_now()
 # session2.commit()
 # print "finish transfer table community poster image"
 
-
+print "***************************27******************************"
+print "start transfer table user like relation"
+query = session1.query(UserLikeComment)
+for temp in query:
+    tempComment = session2.query(CommentV2).filter_by(old_id=temp.commentid).first()
+    tempUser = session2.query(UserV2).filter_by(old_id = temp.userid).first()
+    userlikecomment  = UserLikeCommentV2(timestamp = temp.timestamp,comment_id=tempComment.id,user_id = tempUser.id)
+    session2.add(userlikecomment)
+session2.commit()
+print "finish transfer table user like relation"

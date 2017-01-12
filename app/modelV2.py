@@ -120,7 +120,7 @@ class TopicV2(BaseModel):
     slogan = Column(VARCHAR)
     theme = Column(VARCHAR)
     timestamp = Column(DATETIME)
-    postnumber = Column(Integer)
+    post_number = Column(Integer)
     old_id = Column(BigInteger)
 
 class TopicImageV2(BaseModel):
@@ -270,7 +270,7 @@ class ReportV2(BaseModel):
     type = Column(Integer)
     authoruser_id = Column(BigInteger)
     timestamp = Column(DATETIME)
-    type_id = Column(Integer)
+    typeid = Column(Integer)
 
 class PostImageV2(BaseModel):
     __tablename__ = 't_post_image'
@@ -322,6 +322,14 @@ class CommunityPosterImageV2(BaseModel):
     url = Column(VARCHAR)
     rank = Column(Integer)
     post_id = Column(BigInteger)
+
+
+class UserLikeCommentV2(BaseModel):
+    __tablename__='t_user_like_comment_relation'
+    id = Column(BigInteger,primary_key=True)
+    timestamp = Column(DATETIME)
+    comment_id =Column(BigInteger)
+    user_id = Column(BigInteger)
 
 
 

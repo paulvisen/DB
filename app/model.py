@@ -323,3 +323,11 @@ class CommunityPosterImage(BaseModel):
     rank = Column(Integer)
 
 
+class UserLikeComment(BaseModel):
+    __tablename__='likecomments'
+    id = Column(Integer,primary_key=True)
+    userid =Column(Integer)
+    commentid = Column(Integer)
+    timestamp = Column(DATETIME)
+
+
